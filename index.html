@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Student Live Panel</title>
+<style>
+body{
+  font-family:Segoe UI;
+  background:#f4f6fa;
+  padding:30px;
+}
+
+h2{
+  text-align:center;
+}
+
+.table-box{
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 10px 25px rgba(0,0,0,.1);
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  padding:10px;
+  border:1px solid #ddd;
+  text-align:center;
+}
+
+th{
+  background:#0b3c8a;
+  color:white;
+}
+
+tr:hover{
+  background:#f1f1f1;
+}
+
+</style>
+</head>
+<body>
+
+<h2>Student Live Data Panel</h2>
+
+<div class="table-box">
+<table id="studentTable">
+<thead>
+<tr>
+<th>SL</th>
+<th>Name</th>
+<th>Roll</th>
+<th>Mobile</th>
+<th>Father</th>
+<th>Date</th>
+<th>Course</th>
+<th>Student ID</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</div>
+
+<script>
+
+const sheetURL = "https://script.google.com/macros/s/AKfycbxncY6RBgvsKgUVUULOV7VM8e9ggCoAz2AZGk-C6nf83vh-M-G_GK7AlFd_-SeNZzx_/exec";  // এখানে একই Apps Script URL বসাও
+
+async function loadData(){
+  try{
+    const res = await fetch(sheetURL);
+    const data = await res.json();
+
+    const tbody = document.querySelector("#studentTable tbody");
+    tbody.innerHTML = "";
+
+    data.forEach((s,index)=>{
+      tbody.innerHTML += `
+        <tr>
+          <td>${s.SL || index+1}</td>
+          <td>${s.Name || ""}</td>
+          <td>${s.Roll || ""}</td>
+          <td>${s.Mobile || ""}</td>
+          <td>${s.Father || ""}</td>
+          <td>${s.Date || ""}</td>
+          <td>${s.Course || ""}</td>
+          <td>${s.StudentID || ""}</td>
+        </tr>
+      `;
+    });
+
+  }catch(err){
+    alert("⚠ Data load error");
+  }
+}
+
+loadData();
+
+</script>
+
+</body>
+</html>
